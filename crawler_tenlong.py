@@ -13,7 +13,7 @@ import urllib3
 urllib3.disable_warnings()
 logging.captureWarnings(True)
 
-# for Jinja2
+# set utf-8 codecs for Jinja2.
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -52,7 +52,8 @@ def main():
     # remove the extra text.
     remove_order_element     = book_intro.replace('<p>\n\t下單後立即進貨\n</p>', '')
     remove_shipment_element  = remove_order_element.replace('<p>\n\t立即出貨\n</p>', '')
-    remove_copyright_element = remove_shipment_element.replace('<p>Copyright ® 2016 Tenlong Computer Book Co, Ltd. All rights reserved.</p>', '')
+    replace_head_color       = remove_shipment_element.replace('<span style="color: #ff00ff;">', '<span style="color: #000000;">')
+    remove_copyright_element = replace_head_color.replace('<p>Copyright ® 2016 Tenlong Computer Book Co, Ltd. All rights reserved.</p>', '')
     remove_footer = remove_copyright_element.replace('<p>\n<a href="/faq">客服與FAQ</a> |\n\t\t<a href="/about">連絡我們</a> |\n\t\t<a href="/privacy">隱私權政策</a> |\n\t\t<a href="/terms">服務條款</a>\n</p>', '')
     book_intro = remove_footer.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
     
