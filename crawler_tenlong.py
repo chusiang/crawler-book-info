@@ -1,40 +1,81 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-import requests
 from bs4 import BeautifulSoup
-import lxml
-import urllib3
+from jinja2 import Template
 import logging
+import lxml
+import requests
+import sys
+import urllib3
 
 # disable ssl warn message.
 urllib3.disable_warnings()
 logging.captureWarnings(True)
 
+# for Jinja2
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 def main():
   try:
-    # send get request and get reposoe.
-    res = requests.get('https://www.tenlong.com.tw/items/7121275074')
+
+    '''
+    get data 
+    '''
+    arg = sys.argv[1]
+
+    if arg.isdigit():
+      # send get request and get reposoe.
+      res = requests.get('https://www.tenlong.com.tw/items/' + arg)
+      soup = BeautifulSoup(res.text, 'lxml')
+
+    else:
+      # get web page from local for development.
+      soup = BeautifulSoup(open(arg), 'lxml')
+
+    '''
+    parser book data
+    '''
+    parser_book_title = soup.title
+    book_title = str(parser_book_title).replace('<title>天瓏網路書店-', '').replace('</title>', '')
+
+    # book info.
+    parser_book_info = soup.find(id='item_info')
+    book_info = str(parser_book_info).replace('<span style="float:left">', '').replace('</span>', '')
     
-    soup = BeautifulSoup(res.text, 'lxml')
-    
-    # get book info.
-    book_info = soup.find(id='item_info')
-    print book_info
-    
-    # get book context.
-    book_context = ''
-    for context in soup.find_all('p'):
-      book_context += str(context)
-    
+    # book intro.
+    book_intro = ''
+    for intro in soup.find_all('p'):
+      book_intro += str(intro)
+
     # remove the extra text.
-    remove_order_element     = book_context.replace('<p>\n\t下單後立即進貨\n</p>', '')
+    remove_order_element     = book_intro.replace('<p>\n\t下單後立即進貨\n</p>', '')
     remove_shipment_element  = remove_order_element.replace('<p>\n\t立即出貨\n</p>', '')
     remove_copyright_element = remove_shipment_element.replace('<p>Copyright ® 2016 Tenlong Computer Book Co, Ltd. All rights reserved.</p>', '')
     remove_footer = remove_copyright_element.replace('<p>\n<a href="/faq">客服與FAQ</a> |\n\t\t<a href="/about">連絡我們</a> |\n\t\t<a href="/privacy">隱私權政策</a> |\n\t\t<a href="/terms">服務條款</a>\n</p>', '')
-    book_context = remove_footer.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
+    book_intro = remove_footer.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
     
-    print book_context
+    template = Template('''\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title> {{ title }} </title>
+  </head>
+  <body>
+    {{ info }}
+    {{ intro }}
+  </body>
+</html>
+''')
+
+    result = template.render(title=book_title, info=book_info, intro=book_intro)
+
+    f = open('result.html', 'w')
+    f.write(result)
+    f.close()
 
   except Exception as e:
     print(e)
