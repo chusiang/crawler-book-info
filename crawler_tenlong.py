@@ -27,7 +27,8 @@ def main():
 
     if arg.isdigit():
       # send get request and get reposoe.
-      res = requests.get('https://www.tenlong.com.tw/products/' + arg)
+      book_url = 'https://www.tenlong.com.tw/products/' + arg
+      res = requests.get(book_url)
       soup = BeautifulSoup(res.text, 'lxml')
 
     else:
@@ -75,13 +76,15 @@ def main():
     <title> {{ title }} </title>
   </head>
   <body>
+    天瓏書局：<a href="{{ url }}" target="_blank">{{ url }}</a>
+    <hr>
     {{ info }}
     {{ intro }}
   </body>
 </html>
 ''')
 
-    result = template.render(title=book_title, info=book_info, intro=book_intro)
+    result = template.render(title=book_title, url=book_url, info=book_info, intro=book_intro)
 
     f = open('result.html', 'w')
     f.write(result)
