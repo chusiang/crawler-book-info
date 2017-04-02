@@ -27,7 +27,7 @@ def main():
 
     if arg.isdigit():
       # send get request and get reposoe.
-      res = requests.get('https://www.tenlong.com.tw/items/' + arg)
+      res = requests.get('https://www.tenlong.com.tw/products/' + arg)
       soup = BeautifulSoup(res.text, 'lxml')
 
     else:
