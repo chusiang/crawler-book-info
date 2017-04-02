@@ -46,12 +46,21 @@ def main():
 
     # book intro.
     book_intro = ''
+    #len(soup.find_all('p'))
     for intro in soup.find_all('p'):
       book_intro += str(intro)
 
     # remove the extra text.
-    remove_order_element     = book_intro.replace('<p>\n\t下單後立即進貨\n</p>', '')
-    remove_shipment_element  = remove_order_element.replace('<p>\n\t立即出貨\n</p>', '')
+    remove_order_element1     = book_intro.replace('立即出貨\n', '')
+
+    delivery_status = soup.find_all('span', class_='delivery-status')
+    remove_order_element2     = remove_order_element1.replace(delivery_status[0].encode('utf-8') + '\n', '')
+    remove_order_element3     = remove_order_element2.replace('<p>\n              </p>', '')
+
+    remove_order_element4     = remove_order_element3.replace('<p>\n\t下單後立即進貨\n</p>', '')
+
+    remove_shipment_element  = remove_order_element3.replace('<p>\n\t立即出貨\n</p>', '').replace('<p> </p><p>', '<p>')
+
     replace_head_color       = remove_shipment_element.replace('<span style="color: #ff00ff;">', '<span style="color: #000000;">')
     remove_copyright_element = replace_head_color.replace('<p>Copyright ® 2016 Tenlong Computer Book Co, Ltd. All rights reserved.</p>', '')
     remove_footer = remove_copyright_element.replace('<p>\n<a href="/faq">客服與FAQ</a> |\n\t\t<a href="/about">連絡我們</a> |\n\t\t<a href="/privacy">隱私權政策</a> |\n\t\t<a href="/terms">服務條款</a>\n</p>', '')
