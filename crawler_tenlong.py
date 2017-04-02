@@ -42,14 +42,12 @@ def main():
     book_title = str(parser_book_title).replace('<title>天瓏網路書店-', '').replace('</title>', '')
 
     # book info.
-    parser_book_info = soup.find_all('div', { 'class' : 'item-info' } )
+    parser_book_info = soup.find_all('div', class_='item-info')
     book_info = parser_book_info[0].encode('utf-8')
 
-    # book intro.
-    book_intro = ''
-    #len(soup.find_all('p'))
-    for intro in soup.find_all('p'):
-      book_intro += str(intro)
+    # book desc.
+    parser_book_intro = soup.find_all('div', class_='item-desc')
+    book_intro = parser_book_intro[0].encode('utf-8')
 
     # remove the extra text.
     remove_order_element1     = book_intro.replace('立即出貨\n', '')
@@ -65,7 +63,7 @@ def main():
     replace_head_color       = remove_shipment_element.replace('<span style="color: #ff00ff;">', '<span style="color: #000000;">')
     remove_copyright_element = replace_head_color.replace('<p>Copyright ® 2016 Tenlong Computer Book Co, Ltd. All rights reserved.</p>', '')
     remove_footer = remove_copyright_element.replace('<p>\n<a href="/faq">客服與FAQ</a> |\n\t\t<a href="/about">連絡我們</a> |\n\t\t<a href="/privacy">隱私權政策</a> |\n\t\t<a href="/terms">服務條款</a>\n</p>', '')
-    book_intro = remove_footer.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
+    book_desc = remove_footer.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
     
     template = Template('''\
 <!DOCTYPE html>
@@ -79,12 +77,12 @@ def main():
     天瓏書局：<a href="{{ url }}" target="_blank">{{ url }}</a>
     <hr>
     {{ info }}
-    {{ intro }}
+    {{ desc }}
   </body>
 </html>
 ''')
 
-    result = template.render(title=book_title, url=book_url, info=book_info, intro=book_intro)
+    result = template.render(title=book_title, url=book_url, info=book_info, desc=book_desc)
 
     f = open('result.html', 'w')
     f.write(result)
