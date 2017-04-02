@@ -41,9 +41,9 @@ def main():
     book_title = str(parser_book_title).replace('<title>天瓏網路書店-', '').replace('</title>', '')
 
     # book info.
-    parser_book_info = soup.find(id='item_info')
-    book_info = str(parser_book_info).replace('<span style="float:left">', '').replace('</span>', '')
-    
+    parser_book_info = soup.find_all('div', { 'class' : 'item-info' } )
+    book_info = parser_book_info[0].encode('utf-8')
+
     # book intro.
     book_intro = ''
     for intro in soup.find_all('p'):
