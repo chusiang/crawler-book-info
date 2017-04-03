@@ -34,6 +34,12 @@ A sample crawler for quick parser the book information.
 1. We can see the https://www.tenlong.com.tw/products/9781491915325, it is clean, now.
 1. Finally, we can clip the information to Evernote with [Evernote Web Clipper](https://evernote.com/intl/zh-tw/webclipper/).
 
+## Docker container
+
+Now, the **Evernote Web Clipper** is not support local files, so we can clip it with Nginx.
+
+    $ docker run --name nginx -v $TARGET/crawler-book-info:/usr/share/nginx/html -p 80:80 -d nginx
+
 ## License
 
 Copyright (c) chusiang from 2017 under the MIT license.
