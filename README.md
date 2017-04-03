@@ -27,7 +27,7 @@ A sample crawler for quick parser the book information.
 1. View result.
 
        (.venv) [ jonny@xenial ~/vcs/crawler-book-outline ]
-       $ firefox result.html
+       $ firefox index.html
 
     ![ansiblebook](https://cloud.githubusercontent.com/assets/219066/24584670/8ffb25f2-17a7-11e7-913a-2f570f773a66.png)
 

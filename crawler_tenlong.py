@@ -92,7 +92,7 @@ def main():
 
     result = template.render(title=book_title, url=book_url, info=book_info, desc=book_desc)
 
-    f = open('result.html', 'w')
+    f = open('index.html', 'w')
     f.write(result)
     f.close()
 
