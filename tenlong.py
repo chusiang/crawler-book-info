@@ -14,13 +14,9 @@ import urllib3
 urllib3.disable_warnings()
 logging.captureWarnings(True)
 
-def main():
+
+def get_data():
   try:
-
-    '''
-    get data
-    '''
-
     arg = sys.argv[1]
 
     if arg.isdigit():
@@ -28,31 +24,40 @@ def main():
       book_url = str('https://www.tenlong.com.tw/products/' + arg)
       res = requests.get(book_url)
       soup = BeautifulSoup(res.text, 'lxml')
+      return soup, book_url
 
     else:
       # get web page from local for development.
       soup = BeautifulSoup(open(arg), 'lxml')
+      return soup
+
+  except Exception as e:
+    print(e)
+
+def main():
+  try:
+    data = get_data()
 
     '''
     parser book data
     '''
 
-    parser_book_title = soup.title
+    parser_book_title = data[0].title
     book_title = str(parser_book_title).replace('<title>天瓏網路書店-', '').replace('</title>', '')
 
     #book info.
-    parser_book_info = soup.find_all('div', class_='item-info')
+    parser_book_info = data[0].find_all('div', class_='item-info')
     book_info = parser_book_info[0]
 
     #book desc.
-    parser_book_intro = soup.find_all('div', class_='item-desc')
+    parser_book_intro = data[0].find_all('div', class_='item-desc')
     book_intro = parser_book_intro[0]
 
     #remove the extra text.
     remove_order_element1 = str(book_intro).replace('立即出貨\n', '')
 
     #remove delivery status.
-    delivery_status = soup.find_all('span', class_='delivery-status')
+    delivery_status = data[0].find_all('span', class_='delivery-status')
     if len(delivery_status) != 0:
       remove_order_element2     = remove_order_element1.replace(str(delivery_status[0].encode('utf-8') + b'\n'), '')
     else:
@@ -109,7 +114,7 @@ def main():
 </html>
 ''')
 
-    result = template.render(title=book_title, url=book_url, info=book_info, desc=book_desc, version=short_git_sha)
+    result = template.render(title=book_title, url=data[1], info=book_info, desc=book_desc, version=short_git_sha)
 
     f = open('index.html', 'w')
     f.write(result)
