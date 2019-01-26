@@ -1,13 +1,18 @@
 # Crawler Book Info
 
-A sample crawler for quick parser the book information.
+A sample crawler for quick parser some books information.
 
 ## Usage
+
+1. Install the virtualenv.
+
+       [ jonny@xenial ~/vcs/crawler-book-outline ]
+       $ sudo pip3 install virtualenv
 
 1. create virtualenv.
 
        [ jonny@xenial ~/vcs/crawler-book-outline ]
-       $ virtualenv .venv
+       $ virtualenv -p python3 .venv
 
 1. Enter the virtualenv.
 
@@ -17,12 +22,12 @@ A sample crawler for quick parser the book information.
 1. Install packages with pip.
 
        (.venv) [ jonny@xenial ~/vcs/crawler-book-outline ]
-       $ pip install -r requirements.txt
+       $ pip3 install -r requirements.txt
 
 1. Run crawler with **ISBN-13** args.
 
        (.venv) [ jonny@xenial ~/vcs/crawler-book-outline ]
-       $ python crawler_tenlong.py 9781491915325
+       $ python3 tenlong.py 9781491915325
 
 1. View result.
 
