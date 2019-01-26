@@ -34,56 +34,60 @@ def get_data():
   except Exception as e:
     print(e)
 
+def parser_book_title(data):
+    book_title = data.title
+    book_title = str(book_title).replace('<title>天瓏網路書店-', '').replace('</title>', '')
+    return book_title
+
+def git_sha():
+  git_repo = git.Repo(search_parent_directories=True)
+  git_sha = git_repo.head.object.hexsha
+  short_git_sha = git_sha[:8]
+  return short_git_sha
+
 def main():
   try:
     data = get_data()
+
 
     '''
     parser book data
     '''
 
-    parser_book_title = data[0].title
-    book_title = str(parser_book_title).replace('<title>天瓏網路書店-', '').replace('</title>', '')
-
-    #book info.
+    # book info.
     parser_book_info = data[0].find_all('div', class_='item-info')
     book_info = parser_book_info[0]
 
-    #book desc.
+    # book desc.
     parser_book_intro = data[0].find_all('div', class_='item-desc')
     book_intro = parser_book_intro[0]
 
-    #remove the extra text.
-    remove_order_element1 = str(book_intro).replace('立即出貨\n', '')
+    # remove the extra text.
+    page_data = str(book_intro).replace('立即出貨\n', '')
 
-    #remove delivery status.
+    # remove delivery status.
     delivery_status = data[0].find_all('span', class_='delivery-status')
+
     if len(delivery_status) != 0:
-      remove_order_element2     = remove_order_element1.replace(str(delivery_status[0].encode('utf-8') + b'\n'), '')
-    else:
-      remove_order_element2     = remove_order_element1
+      page_data = page_data.replace(str(delivery_status[0].encode('utf-8') + b'\n'), '')
 
-    remove_order_element3     = remove_order_element2.replace('<p>\n              </p>', '')
+    page_data = page_data.replace('<p>\n              </p>', '')
+    page_data = page_data.replace('<p>\n\t下單後立即進貨\n</p>', '')
 
-    remove_order_element4     = remove_order_element3.replace('<p>\n\t下單後立即進貨\n</p>', '')
+    # remove shipment element.
+    page_data = page_data.replace('<p>\n\t立即出貨\n</p>', '').replace('<p> </p><p>', '<p>')
 
-    remove_shipment_element  = remove_order_element4.replace('<p>\n\t立即出貨\n</p>', '').replace('<p> </p><p>', '<p>')
+    # replace head color.
+    page_data = page_data.replace('<span style="color: #ff00ff;">', '<span style="color: #000000;">')
 
-    replace_head_color       = remove_shipment_element.replace('<span style="color: #ff00ff;">', '<span style="color: #000000;">')
+    # remove copyright element.
+    page_data = page_data.replace('<p>Copyright ® 2016 Tenlong Computer Book Co, Ltd. All rights reserved.</p>', '')
 
-    remove_copyright_element = replace_head_color.replace('<p>Copyright ® 2016 Tenlong Computer Book Co, Ltd. All rights reserved.</p>', '')
+    # remove footer.
+    page_data = page_data.replace('<p>\n<a href="/faq">客服與FAQ</a> |\n\t\t<a href="/about">連絡我們</a> |\n\t\t<a href="/privacy">隱私權政策</a> |\n\t\t<a href="/terms">服務條款</a>\n</p>', '')
 
-    remove_footer = remove_copyright_element.replace('<p>\n<a href="/faq">客服與FAQ</a> |\n\t\t<a href="/about">連絡我們</a> |\n\t\t<a href="/privacy">隱私權政策</a> |\n\t\t<a href="/terms">服務條款</a>\n</p>', '')
+    book_desc = page_data.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
 
-    book_desc = remove_footer.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
-
-    '''
-    Git
-    '''
-
-    git_repo = git.Repo(search_parent_directories=True)
-    git_sha = git_repo.head.object.hexsha
-    short_git_sha = git_sha[:8]
 
     '''
     Template
@@ -114,7 +118,9 @@ def main():
 </html>
 ''')
 
-    result = template.render(title=book_title, url=data[1], info=book_info, desc=book_desc, version=short_git_sha)
+    book_title = parser_book_title(data[0])
+    project_version = git_sha()
+    result = template.render(title=book_title, url=data[1], info=book_info, desc=book_desc, version=project_version)
 
     f = open('index.html', 'w')
     f.write(result)
