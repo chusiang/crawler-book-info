@@ -1,8 +1,9 @@
+GitPython
+Jinja2
+MarkupSafe
 appdirs
 beautifulsoup4
-Jinja2
 lxml
-MarkupSafe
 packaging
 pyparsing
 requests>=2.20.0

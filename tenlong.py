@@ -7,15 +7,12 @@ import logging
 import lxml
 import requests
 import sys
+import git
 import urllib3
 
 # disable ssl warn message.
 urllib3.disable_warnings()
 logging.captureWarnings(True)
-
-# set utf-8 codecs for Jinja2.
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
 
 def main():
   try:
@@ -23,6 +20,7 @@ def main():
     '''
     get data
     '''
+
     arg = sys.argv[1]
 
     if arg.isdigit():
@@ -38,6 +36,7 @@ def main():
     '''
     parser book data
     '''
+
     parser_book_title = soup.title
     book_title = str(parser_book_title).replace('<title>天瓏網路書店-', '').replace('</title>', '')
 
@@ -73,6 +72,18 @@ def main():
 
     book_desc = remove_footer.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
 
+    '''
+    Git
+    '''
+
+    git_repo = git.Repo(search_parent_directories=True)
+    git_sha = git_repo.head.object.hexsha
+    short_git_sha = git_sha[:8]
+
+    '''
+    Template
+    '''
+
     template = Template('''\
 <!DOCTYPE html>
 <html>
@@ -82,18 +93,23 @@ def main():
     <title> {{ title }} </title>
   </head>
   <body>
-    Buy: <br/>
-    <ul>
-      <li> <a href="{{ url }}" target="_blank">天瓏書局</a> </li>
-    </ul>
+    <p>
+      Buy:
+      <ul>
+        <li> <a href="{{ url }}" target="_blank">天瓏書局</a> </li>
+      </ul>
+    </p>
     <hr>
     {{ info }}
     {{ desc }}
+  <footer style="text-align: center;">
+    Power by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a> ({{ version }}).
+  </footer>
   </body>
 </html>
 ''')
 
-    result = template.render(title=book_title, url=book_url, info=book_info, desc=book_desc)
+    result = template.render(title=book_title, url=book_url, info=book_info, desc=book_desc, version=short_git_sha)
 
     f = open('index.html', 'w')
     f.write(result)
