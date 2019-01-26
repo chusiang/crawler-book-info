@@ -39,6 +39,11 @@ def parser_book_title(data):
     book_title = str(book_title).replace('<title>天瓏網路書店-', '').replace('</title>', '')
     return book_title
 
+def parser_book_info(data):
+    parser_book_info = data.find_all('div', class_='item-info')
+    book_info = parser_book_info[0]
+    return book_info
+
 def git_sha():
   git_repo = git.Repo(search_parent_directories=True)
   git_sha = git_repo.head.object.hexsha
@@ -49,14 +54,9 @@ def main():
   try:
     data = get_data()
 
-
     '''
     parser book data
     '''
-
-    # book info.
-    parser_book_info = data[0].find_all('div', class_='item-info')
-    book_info = parser_book_info[0]
 
     # book desc.
     parser_book_intro = data[0].find_all('div', class_='item-desc')
@@ -119,6 +119,7 @@ def main():
 ''')
 
     book_title = parser_book_title(data[0])
+    book_info = parser_book_info(data[0])
     project_version = git_sha()
     result = template.render(title=book_title, url=data[1], info=book_info, desc=book_desc, version=project_version)
 
