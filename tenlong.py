@@ -45,33 +45,7 @@ def parser_book_info(data):
 
 def parser_book_desc(data):
   parser_book_desc = data.find_all('div', class_='item-desc')
-  book_desc = parser_book_desc[0]
-
-  # Remove the extra text.
-  book_desc = str(book_desc).replace('立即出貨\n', '')
-
-  # Remove delivery status.
-  delivery_status = data.find_all('span', class_='delivery-status')
-
-  if len(delivery_status) != 0:
-    book_desc = book_desc.replace(str(delivery_status[0].encode('utf-8') + b'\n'), '')
-
-  book_desc = book_desc.replace('<p>\n              </p>', '')
-  book_desc = book_desc.replace('<p>\n\t下單後立即進貨\n</p>', '')
-
-  # Remove shipment element.
-  book_desc = book_desc.replace('<p>\n\t立即出貨\n</p>', '').replace('<p> </p><p>', '<p>')
-
-  # Replace head color.
-  book_desc = book_desc.replace('<span style="color: #ff00ff;">', '<span style="color: #000000;">')
-
-  # Remove copyright element.
-  book_desc = book_desc.replace('<p>Copyright ® 2016 Tenlong Computer Book Co, Ltd. All rights reserved.</p>', '')
-
-  # Remove footer.
-  book_desc = book_desc.replace('<p>\n<a href="/faq">客服與FAQ</a> |\n\t\t<a href="/about">連絡我們</a> |\n\t\t<a href="/privacy">隱私權政策</a> |\n\t\t<a href="/terms">服務條款</a>\n</p>', '')
-  book_desc = book_desc.replace('<p>天瓏提供<strong>超商代收！</strong></p>', '')
-
+  book_desc = str(parser_book_desc[0])
   return book_desc
 
 def git_sha():
@@ -101,7 +75,10 @@ def main():
     </p>
     <hr>
     {{ info }}
+
+    <h2>商品描述</h2>
     {{ desc }}
+
   <footer style="text-align: center;">
     Power by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a> ({{ version }}).
   </footer>
