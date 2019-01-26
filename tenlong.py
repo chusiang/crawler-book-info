@@ -53,10 +53,20 @@ def parser_book_author(data):
   try:
     book_author = parser_item_desc[1]
   except Exception as e:
-    print("We can't find the information of author !")
+    print("'Author' is not found.")
     book_author = "Not found."
   finally:
     return book_author
+
+def parser_book_outline(data):
+  parser_item_desc = data.find_all('div', class_='item-desc')
+  try:
+    book_outline = parser_item_desc[2]
+  except Exception as e:
+    print("'Outline' is not found.")
+    book_outline = "Not found."
+  finally:
+    return book_outline
 
 def git_sha():
   git_repo = git.Repo(search_parent_directories=True)
@@ -92,6 +102,9 @@ def main():
     <h2>作者簡介</h2>
     {{ author }}
 
+    <h2>目錄大綱</h2>
+    {{ outline }}
+
   <footer style="text-align: center;">
     Power by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a> ({{ version }}).
   </footer>
@@ -108,10 +121,19 @@ def main():
     book_info = parser_book_info(data[0])
     book_desc = parser_book_desc(data[0])
     book_author = parser_book_author(data[0])
+    book_outline = parser_book_outline(data[0])
     project_version = git_sha()
 
     # Mapping the parser data to template.
-    result = template.render(title=book_title, url=book_url, info=book_info, desc=book_desc, author=book_author, version=project_version)
+    result = template.render(
+        title=book_title,
+        url=book_url,
+        info=book_info,
+        desc=book_desc,
+        author=book_author,
+        outline=book_outline,
+        version=project_version
+    )
 
     # Write to HTML file.
     f = open('index.html', 'w')
