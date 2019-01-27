@@ -9,6 +9,7 @@ import requests
 import sys
 import git
 import urllib3
+import pangu
 
 # disable ssl warn message.
 urllib3.disable_warnings()
@@ -40,7 +41,7 @@ def parser_book_title(data):
 
 def parser_book_info(data):
   parser_book_info = data.find_all('div', class_='item-info')
-  book_info = parser_book_info[0]
+  book_info = str(parser_book_info[0])
   return book_info
 
 def parser_book_desc(data):
@@ -137,7 +138,7 @@ def main():
 
     # Write to HTML file.
     f = open('index.html', 'w')
-    f.write(result)
+    f.write(pangu.spacing_text(result))
     f.close()
 
   except Exception as e:

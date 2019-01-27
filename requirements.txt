@@ -5,6 +5,7 @@ appdirs
 beautifulsoup4
 lxml
 packaging
+pangu
 pyparsing
 requests>=2.20.0
 six

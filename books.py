@@ -9,6 +9,7 @@ import requests
 import sys
 import git
 import urllib3
+import pangu
 
 # disable ssl warn message.
 urllib3.disable_warnings()
@@ -202,7 +203,7 @@ def main():
 
     # Write to HTML file.
     f = open('index.html', 'w')
-    f.write(result)
+    f.write(pangu.spacing_text(result))
     f.close()
 
   except Exception as e:
