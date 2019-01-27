@@ -108,7 +108,7 @@ def main():
     {{ outline }}
 
   <footer style="text-align: center;">
-    Power by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a> ({{ version }}).
+    Parser by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a> ({{ version }}).
   </footer>
   </body>
 </html>
