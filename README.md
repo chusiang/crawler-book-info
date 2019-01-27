@@ -34,7 +34,9 @@ A sample crawler for quick parser some books information.
 
 ## Usage
 
-1. Run crawler with **ISBN-13** args.
+### tenlong.com.tw
+
+1. Run crawler with **ISBN-13**.
 
     ```
     (.venv) [ jonny@xenial ~/vcs/crawler-book-outline ]
@@ -47,6 +49,24 @@ A sample crawler for quick parser some books information.
     (.venv) [ jonny@xenial ~/vcs/crawler-book-outline ]
     $ make telong 9781491915325
     ```
+
+### books.com.tw
+
+1. Run crawler with **url**.
+
+    ```
+    (.venv) [ jonny@xenial ~/vcs/crawler-book-outline ]
+    $ python3 books.py https://www.books.com.tw/products/0010810939
+    ```
+
+1. Run crawler with **product number**.
+
+    ```
+    (.venv) [ jonny@xenial ~/vcs/crawler-book-outline ]
+    $ python3 books.py 0010810939
+    ```
+
+> Not support the **ISBN-13** args yet on books.com.tw.
 
 ### View Result
 
