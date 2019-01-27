@@ -75,14 +75,16 @@ def parser_book_info2(data):
   return book_info
 
 def parser_book_desc(data):
-  parser_item_desc = data.find_all('div', class_='item-desc')
+  parser_item_desc = data.find_all('div', class_='bd')
   book_desc = str(parser_item_desc[0])
   return book_desc
 
 def parser_book_author(data):
-  parser_item_desc = data.find_all('div', class_='item-desc')
+  parser_item_desc = data.find_all('div', class_='bd')
   try:
-    book_author = parser_item_desc[1]
+    book_author = str(parser_item_desc[1]).replace('作者簡介<br/>', '')
+    book_author = book_author.replace('<strong>\n<br/>', '<strong>')
+    #book_author = book_author.replace(r'\r\n','')
   except Exception as e:
     print("'Author' is not found.")
     book_author = "Not found."
@@ -90,7 +92,7 @@ def parser_book_author(data):
     return book_author
 
 def parser_book_outline(data):
-  parser_item_desc = data.find_all('div', class_='item-desc')
+  parser_item_desc = data.find_all('div', class_='bd')
   try:
     book_outline = parser_item_desc[2]
   except Exception as e:
@@ -154,10 +156,9 @@ def main():
     book_info1 = parser_book_info1(data[0])
     book_price = parser_book_price(data[0])
     book_info2 = parser_book_info2(data[0])
-
-    #book_desc = parser_book_desc(data[0])
-    #book_author = parser_book_author(data[0])
-    #book_outline = parser_book_outline(data[0])
+    book_desc = parser_book_desc(data[0])
+    book_author = parser_book_author(data[0])
+    book_outline = parser_book_outline(data[0])
     project_version = git_sha()
 
     # Mapping the parser data to template.
@@ -167,10 +168,9 @@ def main():
         info1=book_info1,
         price=book_price,
         info2=book_info2,
-        #info=book_info,
-        #desc=book_desc,
-        #author=book_author,
-        #outline=book_outline,
+        desc=book_desc,
+        author=book_author,
+        outline=book_outline,
         version=project_version
     )
 
