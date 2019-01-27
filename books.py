@@ -36,6 +36,13 @@ def parser_book_title(data):
   book_title = str(book_title).replace('<title>博客來-', '').replace('</title>', '')
   return book_title
 
+def parser_book_full_title(data):
+  parser_book_full_title = data.find_all('div', class_='mod type02_p002 clearfix')
+  book_full_title = str(parser_book_full_title[0])
+  book_full_title = book_full_title.replace('<div class="mod type02_p002 clearfix">', '')
+  book_full_title = book_full_title.replace('</div>', '')
+  return book_full_title
+
 def parser_book_cover(data):
   parser_book_cover = data.find_all('img', class_='cover M201106_0_getTakelook_P00a400020052_image_wrap')
   book_cover = str(parser_book_cover[0]).replace('//im2.book.com.tw/image/getImage?i=', '')
@@ -136,7 +143,7 @@ def main():
       </ul>
     </p>
     <hr>
-
+    {{ full_title }}
     <p>
       <img src="{{ cover }}"/>
     </p>
@@ -154,9 +161,10 @@ def main():
     <h2>目錄大綱</h2>
     {{ outline }}
 
-  <footer style="text-align: center;">
-    Power by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a> ({{ version }}).
-  </footer>
+    <footer style="text-align: center;">
+      Power by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a> ({{ version }}).
+      <hr>
+    </footer>
   </body>
 </html>
 ''')
@@ -167,6 +175,7 @@ def main():
     # Parser.
     book_title = parser_book_title(data[0])
     book_url = data[1]
+    book_full_title = parser_book_full_title(data[0])
     book_cover = parser_book_cover(data[0])
     book_info1 = parser_book_info1(data[0])
     book_price = parser_book_price(data[0])
@@ -180,6 +189,7 @@ def main():
     result = template.render(
         title=book_title,
         url=book_url,
+        full_title=book_full_title,
         cover=book_cover,
         info1=book_info1,
         price=book_price,
