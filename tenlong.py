@@ -42,6 +42,7 @@ def parser_book_title(data):
 def parser_book_info(data):
   parser_book_info = data.find_all('div', class_='item-info')
   book_info = str(parser_book_info[0])
+  book_info = book_info.replace('<a class="item-preview btn btn-plain" href="#"><i class="fa fa-eye fa-before"></i>預覽內頁</a>', '')
   return book_info
 
 def parser_book_desc(data):
