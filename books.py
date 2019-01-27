@@ -46,7 +46,7 @@ def parser_book_full_title(data):
 
 def parser_book_cover(data):
   parser_book_cover = data.find_all('img', class_='cover M201106_0_getTakelook_P00a400020052_image_wrap')
-  book_cover = str(parser_book_cover[0]).replace('//im2.book.com.tw/image/getImage?i=', '')
+  book_cover = str(parser_book_cover[0])
   book_cover = book_cover.split('https')
   book_cover = 'https' + book_cover[1]
   book_cover = book_cover.split('.jpg')
