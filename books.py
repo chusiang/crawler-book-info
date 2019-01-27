@@ -36,6 +36,15 @@ def parser_book_title(data):
   book_title = str(book_title).replace('<title>博客來-', '').replace('</title>', '')
   return book_title
 
+def parser_book_cover(data):
+  parser_book_cover = data.find_all('img', class_='cover M201106_0_getTakelook_P00a400020052_image_wrap')
+  book_cover = str(parser_book_cover[0]).replace('//im2.book.com.tw/image/getImage?i=', '')
+  book_cover = book_cover.split('https')
+  book_cover = 'https' + book_cover[1]
+  book_cover = book_cover.split('.jpg')
+  book_cover = book_cover[0] + '.jpg'
+  return book_cover
+
 def parser_book_info1(data):
   parser_book_info = data.find_all('div', class_='type02_p003 clearfix')
   book_info = str(parser_book_info[0]).replace('<div class="type02_p003 clearfix">', '')
@@ -127,6 +136,11 @@ def main():
       </ul>
     </p>
     <hr>
+
+    <p>
+      <img src="{{ cover }}"/>
+    </p>
+
     {{ info1 }}
     {{ price }}
     {{ info2 }}
@@ -153,6 +167,7 @@ def main():
     # Parser.
     book_title = parser_book_title(data[0])
     book_url = data[1]
+    book_cover = parser_book_cover(data[0])
     book_info1 = parser_book_info1(data[0])
     book_price = parser_book_price(data[0])
     book_info2 = parser_book_info2(data[0])
@@ -165,6 +180,7 @@ def main():
     result = template.render(
         title=book_title,
         url=book_url,
+        cover=book_cover,
         info1=book_info1,
         price=book_price,
         info2=book_info2,
