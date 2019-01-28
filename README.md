@@ -1,6 +1,6 @@
 # Crawler Book Info
 
-[![Docker Hub](https://img.shields.io/badge/python-3.7-blue.svg)](https://hub.docker.com/r/chusiang/crawler-book-info/)
+[![Travis CI](https://travis-ci.org/chusiang/crawler-book-info.svg?branch=master)](https://travis-ci.org/chusiang/crawler-book-info) [![Python Version](https://img.shields.io/badge/python-3.7-blue.svg)](https://hub.docker.com/r/chusiang/crawler-book-info/)
 [![Docker Hub](https://img.shields.io/badge/docker-chusiang%2Fcrawler--book--info-blue.svg)](https://hub.docker.com/r/chusiang/crawler-book-info/) [![Download Size](https://images.microbadger.com/badges/image/chusiang/crawler-book-info.svg)](https://microbadger.com/images/chusiang/crawler-book-info "Get your own image badge on microbadger.com") [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 A sample crawler for quick parser some books information.
