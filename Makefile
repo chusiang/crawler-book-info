@@ -14,7 +14,10 @@ run_nginx_docker:
 # https://stackoverflow.com/a/6273809/686105
 
 telong:
-	-python3 tenlong.py $(filter-out $@,$(MAKECMDGOALS))
+	python3 tenlong.py $(filter-out $@,$(MAKECMDGOALS))
+
+books:
+	-python3 books.py $(filter-out $@,$(MAKECMDGOALS))
 
 %:
 	@:
