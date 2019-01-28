@@ -2,7 +2,6 @@ Jinja2
 MarkupSafe
 appdirs
 beautifulsoup4
-lxml
 packaging
 pangu
 pyparsing

@@ -4,7 +4,6 @@
 from bs4 import BeautifulSoup
 from jinja2 import Template
 import logging
-import lxml
 import requests
 import sys
 import urllib3
@@ -22,12 +21,12 @@ def get_data():
       # send get request and get reposoe.
       book_url = str('https://www.tenlong.com.tw/products/' + arg)
       res = requests.get(book_url)
-      soup = BeautifulSoup(res.text, 'lxml')
+      soup = BeautifulSoup(res.text)
       return soup, book_url
 
     else:
       # get web page from local for development.
-      soup = BeautifulSoup(open(arg), 'lxml')
+      soup = BeautifulSoup(open(arg))
       return soup
 
   except Exception as e:
