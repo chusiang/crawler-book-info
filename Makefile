@@ -9,6 +9,16 @@ init: start_nginx_docker
 start_nginx_docker:
 	docker run --name nginx -v $(PWD):/usr/share/nginx/html/ -p 80:80 -d nginx
 
+# ---- Check ------------------------------------------------------------------
+
+check: flake8_check
+
+flake8_check:
+	flake8 *.py
+
+flake8_check_docker:
+	docker run --rm -it -v $(PWD):/apps/ alpine/flake8 *.py
+
 # ---- Parser ------------------------------------------------------------------
 
 # make telong <ISBN-13>
