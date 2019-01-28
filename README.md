@@ -104,7 +104,7 @@ The **Evernote Web Clipper** is not support local files, so we can clip it with 
 1. (option) Run Nginx container via make.
 
     ```
-    $ make run_nginx_docker
+    $ make start_nginx_docker
     ```
 
 1. (option) Open web via make.
