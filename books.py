@@ -64,17 +64,35 @@ def parser_book_info1(data):
     info = info.replace('<div class="type02_p003 clearfix">', '')
     info = info.replace('<span class="arrow"></span>', '')
 
-    info = info.replace('<h4>已追蹤作者：<strong class="edit">[ <a href="" id="editTrace">修改</a> ]</strong></h4>', '')
+    info = info.replace('<h4>已追蹤作者：<strong class="edit">', '')
+    info = info.replace('[ <a href="" id="editTrace">修改</a>', '')
+    info = info.replace(' ]</strong></h4>', '')
     info = info.replace('<ul id="list_traced"></ul>', '')
     info = info.replace('<ul class="list_trace" id="list_trace"></ul>', '')
 
-    info = info.replace('<a class="type02_btn09" href="javascript:saveTrace();">確定</a>', '')
-    info = info.replace('<a class="type02_btn09" href="javascript:cancelTrace();">取消</a>', '')
+    info = info.replace('<a class="type02_btn09"', '')
+    info = info.replace(' href="javascript:saveTrace();">確定</a>', '')
+    info = info.replace('<a class="type02_btn09"', '')
+    info = info.replace(' href="javascript:cancelTrace();">取消</a>', '')
 
-    info = info.replace('     <a class="type02_btn02" href="" id="trace_btn1"><span><span class="trace_txt"> </span></span></a>', '')
-    info = info.replace('<a href="//www.books.com.tw/activity/2015/06/trace/index.html#author" target="_blank" title="新功能介紹"><cite class="help">新功能介紹</cite></a>', '')
-    info = info.replace('     <a class="type02_btn02" href="" id="trace_btn2"><span><span class="trace_txt"> </span></span></a>', '')
-    info = info.replace('<a href="//www.books.com.tw/activity/2015/06/trace/index.html#publisher" target="_blank" title="新功能介紹"><cite class="help">新功能介紹</cite></a>', '')
+    info = info.replace('     <a class="type02_btn02" href="" ', '')
+    info = info.replace('id="trace_btn1"><span><span class="trace_txt">', '')
+    info = info.replace(' </span></span></a>', '')
+
+    info = info.replace('<a href="//www.books.com.tw/activity/2015/06/', '')
+    info = info.replace('trace/index.html#author" target="_blank" ', '')
+    info = info.replace('title="新功能介紹"><cite class="help">', '')
+    info = info.replace('新功能介紹</cite></a>', '')
+
+    info = info.replace('     <a class="type02_btn02" href="" ', '')
+    info = info.replace('id="trace_btn2"><span><span class="trace_txt">', '')
+    info = info.replace(' </span></span></a>', '')
+
+    info = info.replace('<a href="//www.books.com.tw/activity/2015/06/', '')
+    info = info.replace('trace/index.html#publisher" target="_blank" ', '')
+    info = info.replace('title="新功能介紹"><cite class="help">', '')
+    info = info.replace('新功能介紹</cite></a>', '')
+
     info = info.replace('</ul></div>', '')
     return info
 
