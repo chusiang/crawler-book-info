@@ -1,4 +1,3 @@
-GitPython
 Jinja2
 MarkupSafe
 appdirs

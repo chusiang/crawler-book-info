@@ -7,7 +7,6 @@ import logging
 import lxml
 import requests
 import sys
-import git
 import urllib3
 import pangu
 
@@ -118,12 +117,6 @@ def parser_book_outline(data):
   finally:
     return book_outline
 
-def git_sha():
-  git_repo = git.Repo(search_parent_directories=True)
-  git_sha = git_repo.head.object.hexsha
-  short_git_sha = git_sha[:8]
-  return short_git_sha
-
 def main():
   try:
 
@@ -163,7 +156,7 @@ def main():
     {{ outline }}
 
     <footer style="text-align: center;">
-      Parser by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a> ({{ version }}).
+      Parser by <a href="https://github.com/chusiang/crawler-book-info" target="_blank">chusiang/crawler-book-info</a>.
       <hr>
     </footer>
   </body>
@@ -184,7 +177,6 @@ def main():
     book_desc = parser_book_desc(data[0])
     book_author = parser_book_author(data[0])
     book_outline = parser_book_outline(data[0])
-    project_version = git_sha()
 
     # Mapping the parser data to template.
     result = template.render(
@@ -197,8 +189,7 @@ def main():
         info2=book_info2,
         desc=book_desc,
         author=book_author,
-        outline=book_outline,
-        version=project_version
+        outline=book_outline
     )
 
     # Write to HTML file.
