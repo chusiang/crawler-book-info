@@ -33,98 +33,103 @@ def get_data():
 
 
 def parser_book_title(data):
-    book_title = data.title
-    book_title = str(book_title).replace('<title>博客來-', '')
-    book_title = book_title.replace('</title>', '')
-    return book_title
+    title = data.title
+    title = str(title).replace('<title>博客來-', '')
+    title = title.replace('</title>', '')
+    return title
 
 
 def parser_book_full_title(data):
-    book_full_title = data.find_all('div', class_='mod type02_p002 clearfix')
-    book_full_title = str(book_full_title[0])
-    book_full_title = book_full_title.replace('<div class="mod type02_p002 clearfix">', '')
-    book_full_title = book_full_title.replace('</div>', '')
-    return book_full_title
+    parser_full_title = data.find_all('div', class_='mod type02_p002 clearfix')
+    full_title = str(parser_full_title[0])
+    full_title = full_title.replace('<div class="mod type02_p002', '')
+    full_title = full_title.replace(' clearfix">', '')
+    full_title = full_title.replace('</div>', '')
+    return full_title
 
 
 def parser_book_cover(data):
-    book_cover = data.find_all('img', itemprop="image")
-    book_cover = str(book_cover[0])
-    book_cover = book_cover.split('https')
-    book_cover = 'https' + book_cover[1]
-    book_cover = book_cover.split('.jpg')
-    book_cover = book_cover[0] + '.jpg'
-    return book_cover
+    parser_cover = data.find_all('img', itemprop="image")
+    cover = str(parser_cover[0])
+    cover = cover.split('https')
+    cover = 'https' + cover[1]
+    cover = cover.split('.jpg')
+    cover = cover[0] + '.jpg'
+    return cover
 
 
 def parser_book_info1(data):
-    book_info = data.find_all('div', class_='type02_p003 clearfix')
-    book_info = str(book_info[0]).replace('<div class="type02_p003 clearfix">', '')
-    book_info = book_info.replace('<span class="arrow"></span>', '')
+    parser_info = data.find_all('div', class_='type02_p003 clearfix')
+    info = str(parser_info[0])
+    info = info.replace('<div class="type02_p003 clearfix">', '')
+    info = info.replace('<span class="arrow"></span>', '')
 
-    book_info = book_info.replace('<h4>已追蹤作者：<strong class="edit">[ <a href="" id="editTrace">修改</a> ]</strong></h4>', '')
-    book_info = book_info.replace('<ul id="list_traced"></ul>', '')
-    book_info = book_info.replace('<ul class="list_trace" id="list_trace"></ul>', '')
+    info = info.replace('<h4>已追蹤作者：<strong class="edit">[ <a href="" id="editTrace">修改</a> ]</strong></h4>', '')
+    info = info.replace('<ul id="list_traced"></ul>', '')
+    info = info.replace('<ul class="list_trace" id="list_trace"></ul>', '')
 
-    book_info = book_info.replace('<a class="type02_btn09" href="javascript:saveTrace();">確定</a>', '')
-    book_info = book_info.replace('<a class="type02_btn09" href="javascript:cancelTrace();">取消</a>', '')
+    info = info.replace('<a class="type02_btn09" href="javascript:saveTrace();">確定</a>', '')
+    info = info.replace('<a class="type02_btn09" href="javascript:cancelTrace();">取消</a>', '')
 
-    book_info = book_info.replace('     <a class="type02_btn02" href="" id="trace_btn1"><span><span class="trace_txt"> </span></span></a>', '')
-    book_info = book_info.replace('<a href="//www.books.com.tw/activity/2015/06/trace/index.html#author" target="_blank" title="新功能介紹"><cite class="help">新功能介紹</cite></a>', '')
-    book_info = book_info.replace('     <a class="type02_btn02" href="" id="trace_btn2"><span><span class="trace_txt"> </span></span></a>', '')
-    book_info = book_info.replace('<a href="//www.books.com.tw/activity/2015/06/trace/index.html#publisher" target="_blank" title="新功能介紹"><cite class="help">新功能介紹</cite></a>', '')
-    book_info = book_info.replace('</ul></div>', '')
-    return book_info
+    info = info.replace('     <a class="type02_btn02" href="" id="trace_btn1"><span><span class="trace_txt"> </span></span></a>', '')
+    info = info.replace('<a href="//www.books.com.tw/activity/2015/06/trace/index.html#author" target="_blank" title="新功能介紹"><cite class="help">新功能介紹</cite></a>', '')
+    info = info.replace('     <a class="type02_btn02" href="" id="trace_btn2"><span><span class="trace_txt"> </span></span></a>', '')
+    info = info.replace('<a href="//www.books.com.tw/activity/2015/06/trace/index.html#publisher" target="_blank" title="新功能介紹"><cite class="help">新功能介紹</cite></a>', '')
+    info = info.replace('</ul></div>', '')
+    return info
 
 
 def parser_book_price(data):
-    book_price = data.find_all('ul', class_='price')
-    book_price = str(book_price[0]).replace('<ul class="price">', '')
-    book_price = book_price.replace('</ul>', '')
-    return book_price
+    parser_price = data.find_all('ul', class_='price')
+    price = str(parser_price[0])
+    price = price.replace('<ul class="price">', '')
+    price = price.replace('</ul>', '')
+    return price
 
 
 def parser_book_info2(data):
-    book_info = data.find_all('div', class_='mod_b type02_m058 clearfix')
-    book_info = str(book_info[0]).replace('<div class="mod_b type02_m058 clearfix">', '')
-    book_info = book_info.replace('<a name="P00a400020016"> </a>', '')
-    book_info = book_info.replace('<h3>詳細資料</h3>', '')
-    book_info = book_info.replace('<div class="bd">', '')
-    book_info = book_info.replace('<ul>', '')
-    book_info = book_info.replace('                          </li></ul>', '</li>')
-    book_info = book_info.replace('<ul class="sort">', '')
-    book_info = book_info.replace('</div></div>', '')
-    return book_info
+    parser_info = data.find_all('div', class_='mod_b type02_m058 clearfix')
+    info = str(parser_info[0])
+    info = info.replace('<div class="mod_b type02_m058 clearfix">', '')
+    info = info.replace('<a name="P00a400020016"> </a>', '')
+    info = info.replace('<h3>詳細資料</h3>', '')
+    info = info.replace('<div class="bd">', '')
+    info = info.replace('<ul>', '')
+    info = info.replace('                          </li></ul>', '</li>')
+    info = info.replace('<ul class="sort">', '')
+    info = info.replace('</div></div>', '')
+    return info
 
 
 def parser_book_desc(data):
-    item_desc = data.find_all('div', class_='bd')
-    book_desc = str(item_desc[0])
-    return book_desc
+    parser_bd = data.find_all('div', class_='bd')
+    desc = str(parser_bd[0])
+    return desc
 
 
 def parser_book_author(data):
-    item_desc = data.find_all('div', class_='bd')
+    parser_bd = data.find_all('div', class_='bd')
     try:
-        book_author = str(item_desc[1]).replace('作者簡介<br/>', '')
-        book_author = book_author.replace('<strong>\n<br/>', '<strong>')
-        # book_author = book_author.replace(r'\r\n','')
+        author = str(parser_bd[1])
+        author = author.replace('作者簡介<br/>', '')
+        author = author.replace('<strong>\n<br/>', '<strong>')
+        # author = book_author.replace(r'\r\n','')
     except IndexError:
         print("'Author' is not found.")
-        book_author = "Not found."
+        author = "Not found."
     finally:
-        return book_author
+        return author
 
 
 def parser_book_outline(data):
-    item_desc = data.find_all('div', class_='bd')
+    parser_bd = data.find_all('div', class_='bd')
     try:
-        book_outline = item_desc[2]
+        outline = str(parser_bd[2])
     except IndexError:
         print("'Outline' is not found.")
-        book_outline = "Not found."
+        outline = "Not found."
     finally:
-        return book_outline
+        return outline
 
 
 def main():
