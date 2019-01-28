@@ -35,17 +35,19 @@ def get_data():
 
 
 def parser_book_title(data):
-    book_title = data.title
-    book_title = str(book_title).replace('<title>天瓏網路書店-', '')
-    book_title = book_title.replace('</title>', '')
-    return book_title
+    title = data.title
+    title = str(title).replace('<title>天瓏網路書店-', '')
+    title = title.replace('</title>', '')
+    return title
 
 
 def parser_book_info(data):
-    parser_book_info = data.find_all('div', class_='item-info')
-    book_info = str(parser_book_info[0])
-    book_info = book_info.replace('<a class="item-preview btn btn-plain" href="#"><i class="fa fa-eye fa-before"></i>預覽內頁</a>', '')
-    return book_info
+    parser_item_info = data.find_all('div', class_='item-info')
+    info = str(parser_item_info[0])
+    info = info.replace('<i class="fa fa-eye fa-before"></i>', '')
+    info = info.replace('<a class="item-preview btn btn-plain" href="#">', '')
+    info = info.replace('預覽內頁</a>', '')
+    return info
 
 
 def parser_book_desc(data):
@@ -57,28 +59,27 @@ def parser_book_desc(data):
 def parser_book_author(data):
     parser_item_desc = data.find_all('div', class_='item-desc')
     try:
-        book_author = parser_item_desc[1]
+        author = parser_item_desc[1]
     except IndexError:
-        print("'Author' is not found.")
-        book_author = "Not found."
+        print("'item-desc[1]' is not found.")
+        author = "Not found."
     finally:
-        return book_author
+        return author
 
 
 def parser_book_outline(data):
     parser_item_desc = data.find_all('div', class_='item-desc')
     try:
-        book_outline = parser_item_desc[2]
+        outline = parser_item_desc[2]
     except IndexError:
-        print("'Outline' is not found.")
-        book_outline = "Not found."
+        print("'item-desc[2]' is not found.")
+        outline = "Not found."
     finally:
-        return book_outline
+        return outline
 
 
 def main():
     try:
-
         # Template with Jinja2
         template = Template('''\
 <!DOCTYPE html>
