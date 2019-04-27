@@ -4,10 +4,13 @@ main: run_nginx_docker
 
 # ---- Initialization ----------------------------------------------------------
 
-init: create_venv start_nginx_docker
+init: create_venv install_packages
 
 create_venv:
 	virtualenv -p python3 .venv
+
+install_packages:
+	pip3 install -r requirements.txt
 
 start_nginx_docker:
 	docker run --name nginx -v $(PWD):/usr/share/nginx/html/ -p 80:80 -d nginx
@@ -57,6 +60,9 @@ endif
 
 # ---- Clean -------------------------------------------------------------------
 
-clean:
-	- docker rm -f nginx
-	-rm -f *.html .venv
+remove_virtualenv:
+	-rm -rf .venv
+
+clean: remove_virtualenv
+	-docker rm -f nginx
+	-rm -f *.html
