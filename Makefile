@@ -10,7 +10,7 @@ create_venv:
 	virtualenv -p python3 .venv
 
 install_packages:
-	pip3 install -r requirements.txt
+	.venv/bin/pip3 install -r requirements.txt
 
 start_nginx_docker:
 	docker run --name nginx -v $(PWD):/usr/share/nginx/html/ -p 80:80 -d nginx
