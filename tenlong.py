@@ -108,11 +108,19 @@ def main():
   <h2>目錄大綱</h2>
   {{ outline }}
 
+  <h2>Memo</h2>
+
+  <h3>我想讀這本書的原因是什麼?</h3>
+
+  <h3>看完書封介紹和目錄大綱後，我覺得我可以從那邊得到什麼?</h3>
+
+  <h3>在買這本新書前，我曾讀過相關的主題的書籍嗎? 當時得到了什麼新知?</h3>
+
   <footer style="text-align: center;">
     Parser by
       <a href="https://github.com/chusiang/crawler-book-info" target="_blank">
         chusiang/crawler-book-info
-      </a>.
+      </a>
     <hr>
   </footer>
 </body>
