@@ -40,7 +40,7 @@ def parser_book_title(data):
 
 
 def parser_book_full_title(data):
-    parser_full_title = data.find_all('div', class_='mod type02_p002 clearfix')
+    parser_full_title = data.find_all('h1')
     full_title = str(parser_full_title[0])
     full_title = full_title.replace('<div class="mod type02_p002', '')
     full_title = full_title.replace(' clearfix">', '')
@@ -49,7 +49,8 @@ def parser_book_full_title(data):
 
 
 def parser_book_cover(data):
-    parser_cover = data.find_all('img', itemprop="image")
+    cover_css_class = 'cover M201106_0_getTakelook_P00a400020052_image_wrap'
+    parser_cover = data.find_all('img', class_=cover_css_class)
     cover = str(parser_cover[0])
     cover = cover.split('https')
     cover = 'https' + cover[1]
