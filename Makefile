@@ -1,10 +1,10 @@
 OS_NAME := $(shell uname)
 
-main: run_nginx_docker
+main: run_containers
 
 # ---- Initialization ----------------------------------------------------------
 
-init: create_venv install_packages
+init: create_venv install_packages run_containers
 
 create_venv:
 	virtualenv -p python3 .venv
@@ -12,8 +12,8 @@ create_venv:
 install_packages:
 	.venv/bin/pip3 install -r requirements.txt
 
-start_nginx_docker:
-	docker run --name nginx -v $(PWD):/usr/share/nginx/html/ -p 80:80 -d nginx
+run_containers:
+	docker-compose up -d
 
 # ---- Check ------------------------------------------------------------------
 
@@ -63,6 +63,8 @@ endif
 remove_virtualenv:
 	-rm -rf .venv
 
-clean: remove_virtualenv
-	-docker rm -f nginx
+remove_containers:
+	docker-compose down -v
+
+clean: remove_virtualenv remove_containers
 	-rm -f *.html

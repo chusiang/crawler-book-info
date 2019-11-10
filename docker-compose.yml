@@ -1,0 +1,10 @@
+version: '2'
+services:
+
+  crawler_book:
+    volumes:
+      - .:/usr/share/nginx/html
+    ports:
+      - 80:80/tcp
+    image: nginx
+
