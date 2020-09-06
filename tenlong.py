@@ -21,14 +21,12 @@ def get_data():
         if arg.isdigit():
             # send get request and get reposoe.
             book_url = str('https://www.tenlong.com.tw/products/' + arg)
-            res = requests.get(book_url)
-            soup = BeautifulSoup(res.text)
-            return soup, book_url
-
         else:
-            # get web page from local for development.
-            soup = BeautifulSoup(open(arg))
-            return soup
+            book_url = str(arg)
+
+        res = requests.get(book_url)
+        soup = BeautifulSoup(res.text)
+        return soup, book_url
 
     except Exception as e:
         print(e)
