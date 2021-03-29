@@ -52,10 +52,10 @@ def parser_book_cover(data):
     cover_css_class = 'cover M201106_0_getTakelook_P00a400020052_image_wrap'
     parser_cover = data.find_all('img', class_=cover_css_class)
     cover = str(parser_cover[0])
-    cover = cover.split('https')
-    cover = 'https' + cover[1]
-    cover = cover.split('.jpg')
-    cover = cover[0] + '.jpg'
+    cover = cover.split('src')
+    cover = cover[1]
+    cover = cover.split('"')
+    cover = cover[1].replace("amp;", "")
     return cover
 
 
