@@ -3,7 +3,7 @@ beautifulsoup4==4.7.1
 certifi==2019.3.9
 chardet==3.0.4
 idna==2.7
-Jinja2==2.10.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 packaging==19.0
 pangu==4.0.6.1
