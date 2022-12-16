@@ -1,7 +1,8 @@
 appdirs==1.4.3
 beautifulsoup4==4.7.1
-certifi==2019.3.9
+certifi==2022.12.7
 chardet==3.0.4
+charset-normalizer==2.0.12
 idna==2.7
 Jinja2==2.11.3
 MarkupSafe==1.1.1
